@@ -23,8 +23,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Deploy to Production
+      
+      - name: Install Mozilla SOPS and Age
         run: |
-          echo "Déploiement en cours sur l'environnement de production..."
-          echo "Vérification des variables et des clés d'accès..."
-          echo "Succès : Application déployée !"
+          sudo apt-get update
+          sudo apt-get install -y age jq
+          wget https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64 -O sops
+          sudo mv sops /usr/local/bin/sops
+          sudo chmod +x /usr/local/bin/sops
+
+      - name: Decrypt Production Secrets and Inject Hermetically
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          echo "Déchiffrement dynamique des secrets de production via SOPS et Age..."
+          export SOPS_AGE_KEY=${{ secrets.SOPS_AGE_KEY }}
+          
+          # Extraction propre des secrets sans affichage en console
+          SIMULATED_AWS_KEY=$(sops -d --extract '["SIMULATED_AWS_KEY"]' secrets-prod.yaml)
+          INTERNAL_TOKEN=$(sops -d --extract '["INTERNAL_TOKEN"]' secrets-prod.yaml)
+          
+          # Ajout de masquage explicite pour prévenir toute fuite en console (sécurité des logs)
+          echo "::add-mask::$SIMULATED_AWS_KEY"
+          echo "::add-mask::$INTERNAL_TOKEN"
+          
+          echo "Lancement de l'application en tâche de fond avec les secrets décryptés injectés..."
+          export SIMULATED_AWS_KEY
+          export INTERNAL_TOKEN
+          export PORT=3000
+          
+          node app.js &
+          NODE_PID=$!
+          sleep 2
+          
+          echo "Test de l'authentification et du service..."
+          curl -s http://localhost:3000 | grep "Hello DevSecOps World" && echo "Succès : Authentification et démarrage validés !"
+          
+          # Nettoyage et extinction du processus
+          kill $NODE_PID
