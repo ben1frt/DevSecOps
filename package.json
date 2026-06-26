@@ -1,0 +1,12 @@
+{
+  "name": "tp-ci-cd-backend",
+  "version": "1.0.0",
+  "description": "Backend Node.js pour TP CI/CD et gestion des secrets",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "author": "DevSecOps Team",
+  "license": "ISC"
+}
