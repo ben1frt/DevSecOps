@@ -1,4 +1,4 @@
-# 🛡️ TP DevSecOps : Sécurisation Cyber du Cycle de Vie des Secrets
+# TP DevSecOps : Sécurisation Cyber du Cycle de Vie des Secrets
 
 Ce dépôt contient la mise en œuvre pratique d'une architecture de haute sécurité protégeant le cycle de vie des secrets au sein d'un backend Node.js et de son pipeline CI/CD GitHub Actions. 
 
@@ -6,7 +6,7 @@ L'approche adoptée s'inscrit dans la philosophie **Shift-Left** (interception l
 
 ---
 
-## 📋 Architecture & Objectifs Réalisés
+## Architecture & Objectifs Réalisés
 
 1. **Analyse Statique et Audit Gitleaks**
    - Remplacement de la clé AWS factice et détection d'historique complète.
@@ -29,7 +29,7 @@ L'approche adoptée s'inscrit dans la philosophie **Shift-Left** (interception l
 
 ---
 
-## 🚀 Instructions de Déploiement & Configuration CI/CD
+## Instructions de Déploiement & Configuration CI/CD
 
 ### 1. Configuration du Secret GitHub (`SOPS_AGE_KEY`)
 
@@ -59,7 +59,7 @@ SOPS_AGE_KEY_FILE=dev.txt sops -d secrets-prod.yaml
 
 ---
 
-## 🛠️ Structure du Projet
+## Structure du Projet
 
 ```text
 ├── .git/hooks/pre-commit     # Hook local de blocage Gitleaks
