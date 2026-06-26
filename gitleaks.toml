@@ -1,0 +1,21 @@
+title = "Gitleaks config with Custom Corporate Rule"
+
+[[rules]]
+id = "corporate-api-token"
+description = "Corporate API Token"
+regex = '''(?i)mycorp_[a-z0-9]{24}'''
+tags = ["api", "mycorp", "corporate"]
+
+[[rules]]
+id = "aws-access-token"
+description = "AWS Access Token"
+regex = '''(A3T[A-Z0-9]|AKIA|AGPA|AIDA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}'''
+tags = ["key", "aws"]
+
+[[rules]]
+id = "generic-api-key"
+description = "Generic API Key / High Entropy"
+regex = '''[a-zA-Z0-9]{32,64}'''
+entropy = 3.5
+secretGroup = 0
+tags = ["generic", "entropy"]
