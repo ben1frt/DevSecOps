@@ -1,7 +1,7 @@
 const http = require('http');
 
-const SIMULATED_AWS_KEY = "AKIAIOSFODNN7TRUEMEB";
-const INTERNAL_TOKEN = "mycorp_secrtok784512963014abcd";
+const SIMULATED_AWS_KEY = process.env.SIMULATED_AWS_KEY || "default_dev_key";
+const INTERNAL_TOKEN = process.env.INTERNAL_TOKEN || "default_internal_token";
 
 const server = http.createServer((req, res) => {
     res.statusCode = 200;
