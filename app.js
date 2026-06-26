@@ -1,6 +1,6 @@
 const http = require('http');
 
-const SIMULATED_AWS_KEY = "AKIAIOSFODNN7EXAMPLE";
+const SIMULATED_AWS_KEY = "AKIAIOSFODNN7TRUEMEB";
 
 const server = http.createServer((req, res) => {
     res.statusCode = 200;
